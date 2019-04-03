@@ -1,0 +1,107 @@
+[user]
+	name = Christopher Gwizdala
+	email = chrgwizd@publicisgroupe.net
+  logallrefupdates = true
+
+[credential]
+  helper = osxkeychain
+
+[core]
+  editor = code -n -w
+	excludesfile = /Users/cgwizdala/.gitignore_global
+  warnambiguousrefs = false
+  ignorecase = false
+  autocrlf = false
+  fileMode = false
+
+[merge]
+  log = true
+  c = /Users/cgwizdala/Applications/Development Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+  tool = opendiff
+  defaultToUpstream = true
+
+[remote "origin"]
+    push = HEAD
+
+[apply]
+    whitespace = fix
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    old = red bold
+    new = green bold
+    meta = yellow bold
+    frag = magenta bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[clean]
+  requireForce = false
+
+[http]
+  sslVerify=false
+
+[push]
+  default = simple
+
+[url "https://"]
+  insteadOf = git://
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Development Apps/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[alias]
+  c = commit
+  cm = commit -m
+  co = checkout
+  # coless = !"f() { echo 'Checking out: '$1; git co $1; echo 'Building LESS files'; grunt lessDev; }; f"
+  st = status
+  br = branch
+  bra = branch -a
+  lg = "log --pretty=format:'%h - %an, %ar : %s' --stat"
+  lgg = "log --graph --decorate --oneline"
+  pp = !"echo 'Pull'; git pull; echo 'Push'; git push origin `git bn`"
+  bn = !git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`
+  brprune = !"echo 'Pruning branch list'; git remote update origin --prune; echo '\nBranch list updated:'; git br -a"
+  stash-unapply = !git stash show -p | git apply -R
+  find = log --pretty=\"format:%Cgreen%H %Cblue%s\" --name-status --grep
+  gpull = pull --rebase origin master
+  # Show unpushed files
+  notpushed = log --branches --not --remotes
+  mt = mergetool
+
+  ltag = tag --list
+
+  gui = !sh -c '/usr/local/bin/git/libexec/git-core/git-gui'
+
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[init]
+  templatedir = ~/.git-templates
+[commit]
+	template = ~/.stCommitMsg
+[mergetool]
+  keepBackup = false
+[rerere]
+  enabled = false
+  autoupdate = true
