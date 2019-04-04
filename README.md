@@ -5,17 +5,18 @@
 Shell script to install system dotfiles
 
 
-## Easy one-liner
+## Clone repo and run script
 
 ```
-curl -sSL "https://raw.githubusercontent.com/christowiz/dotfiles/master/bootstrap.sh" | sh
-```
-
-
-## Download repo/file and run locally
-
-```
+$ git clone https://github.com/christowiz/dotfiles.git
+$ cd dotfiles
 $ sh bootstrap.sh
+```
+
+or run a single-line command:
+
+```
+$ git clone https://github.com/christowiz/dotfiles.git && cd dotfiles && sh bootstrap.sh
 ```
 
 
