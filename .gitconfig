@@ -8,7 +8,7 @@
 
 [core]
   editor = code -n -w
-	excludesfile = /Users/cgwizdala/.gitignore_global
+	excludesfile = ~/.gitignore_global
   warnambiguousrefs = false
   ignorecase = false
   autocrlf = false
@@ -16,7 +16,7 @@
 
 [merge]
   log = true
-  c = /Users/cgwizdala/Applications/Development Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  c = ~/Applications/Development Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
   tool = opendiff
   defaultToUpstream = true

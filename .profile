@@ -15,7 +15,7 @@ fi
 NPM_PACKAGES="$HOME/.npm-packages"
 
 # added for npm-completion https://github.com/Jephuff/npm-bash-completion
-PATH_TO_NPM_COMPLETION="/Users/cgwizdala/.npm-packages/lib/node_modules/npm-completion"
+PATH_TO_NPM_COMPLETION="~/.npm-packages/lib/node_modules/npm-completion"
 source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
 ##EXPORTS
