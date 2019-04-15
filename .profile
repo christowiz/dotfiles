@@ -18,10 +18,10 @@ NPM_PACKAGES="$HOME/.npm-packages"
 PATH_TO_NPM_COMPLETION="/Users/cgwizdala/.npm-packages/lib/node_modules/npm-completion"
 source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
+##EXPORTS
 ##Yarn exports
 export PATH="$HOME/.yarn/bin:$PATH"
 
-##EXPORTS
 #NPM global packages
 export PATH=$PATH:"/usr/local/bin":"$NPM_PACKAGES/bin"
 
@@ -37,6 +37,8 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 ## Tomcat
 export CATALINA_HOME="/usr/local/tomcat/8.5.15"
 
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
 
 PATH=$PATH:"/usr/local/bin":"/usr/local/bin":"/usr/local/bin" && cd $PATH_TO_NPM_COMPLETION && ./update && cd -
 
