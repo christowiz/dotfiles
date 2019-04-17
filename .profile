@@ -1,8 +1,4 @@
-echo '.profile'
-
 [ -f /etc/profile ] && . /etc/profile
-[ -f ~/.shell/.aliases ] && . ~/.shell/.aliases
-[ -f ~/.shell/.functions ] && . ~/.shell/.functions
 
 #terminal colors
 export CLICOLOR=1
@@ -14,9 +10,11 @@ fi
 
 NPM_PACKAGES="$HOME/.npm-packages"
 
+
 # added for npm-completion https://github.com/Jephuff/npm-bash-completion
-PATH_TO_NPM_COMPLETION="~/.npm-packages/lib/node_modules/npm-completion"
-source $PATH_TO_NPM_COMPLETION/npm-completion.sh
+PATH_TO_NPM_COMPLETION="$HOME/.npm-packages/lib/node_modules/npm-completion"
+source "$PATH_TO_NPM_COMPLETION"/npm-completion.sh
+
 
 ##EXPORTS
 ##Yarn exports
@@ -44,6 +42,9 @@ PATH=$PATH:"/usr/local/bin":"/usr/local/bin":"/usr/local/bin" && cd $PATH_TO_NPM
 
 
 
+
+[ -f $HOME/.shell/.aliases ] && . $HOME/.shell/.aliases
+[ -f $HOME/.shell/.functions ] && . $HOME/.shell/.functions
 
 
 
@@ -107,3 +108,6 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

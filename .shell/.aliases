@@ -1,109 +1,108 @@
 ##ALIASES
 
 #Folder aliases
-alias tmp='cd ~/tmp'
+alias tmp="cd ~/tmp"
 
 #Project aliases
-alias projects='cd ~/Projects/'
-alias trampt='cd ~/Projects/Trampt/source/trampt_v2'
-alias osxinstall='cd ~/Projects/osx-install'
+alias projects="cd ~/Projects/"
+alias trampt="cd ~/Projects/Trampt/source/trampt_v2"
+alias osxinstall="cd ~/Projects/osx-install"
 
 
 #Applications
-# alias subl='/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-alias ss='simple-server .'
+# alias subl="/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias ss="simple-server ."
 ##SourceTree alias so it can find the `node` executable
-alias sourcetree='source ~/.bash_profile && open /Applications/Development\ Apps/SourceTree.app'
+alias sourcetree="source ~/.bash_profile && open /Applications/Development\ Apps/SourceTree.app"
 ##Changes app reset
-alias changes='killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app'
+alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
 ##Launch Chrome
-alias chrome='/Applications/Browsers/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+alias chrome="/Applications/Browsers/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 ##Launch Canary
-alias canary='/Applications/Browsers/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+alias canary="/Applications/Browsers/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 # alias chromessl="open -a /Applications/Browsers/Google\ Chrome\ SSL.app --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
 alias chromessl="/Applications/Browsers/Google\ Chrome\ SSL.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
 
 ##TOMCAT SERVER
-alias tomcat='cd /usr/local/tomcat/8.5.15'
-alias tcstart='$CATALINA_HOME/bin/catalina.sh start'
-alias tcstop='$CATALINA_HOME/bin/catalina.sh stop'
-alias tcrestart='tcstop && echo "Sleeping for 2 seconds" ; sleep 2 && tcstart'
+alias tomcat="cd /usr/local/tomcat/8.5.15"
+alias tcstart="${CATALINA_HOME}/bin/catalina.sh start"
+alias tcstop="${CATALINA_HOME}/bin/catalina.sh stop"
+alias tcrestart="tcstop && echo 'Sleeping for 2 seconds' ; sleep 2 && tcstart"
 
 
 # RPi
-alias pihole='ssh pi@192.168.1.42'
+alias pihole="ssh pi@192.168.1.42"
 
 
 #aliases
-alias ls='ls -F'
-alias l='ls -alh'
-alias ll='ls -al'
-alias la='ls -a'
+alias ls="ls -F"
+alias l="ls -alh"
+alias ll="ls -al"
+alias la="ls -a"
 
 #Utilities
-alias bashrc='code ~/.bashrc'
-alias zshrc='code ~/.zshrc'
-alias aliases='code ~/.aliases'
-alias srcbash='source ~/.bashrc'
-alias srczsh='source ~/.zshrc'
-alias hosts='code /etc/hosts'
-alias gitconfig='code ~/.gitconfig'
-alias npmconfig='code ~/.npmrc'
-alias mamp='cd /Applications/MAMP/htdocs'
-alias count='ls -1 | wc -l'
-alias who='whoami'
-alias dusk='du -sk'
-alias volumes='cd /Volumes'
-alias ps='ps -x'
-alias ql='qlmanage -p '$@' >& /dev/null'
-alias show='sudo SetFile -a v'
-alias hide='sudo SetFile -a V'
-alias cpu='top -o cpu'
-alias act='sudo /Applications/Utilities/Activity\ Monitor.app/Contents/MacOS/Activity\ Monitor'
-alias lsdir='ls -l | egrep '^d''
-alias lsfile='ls -l | egrep -v '^d''
-alias watchdir='watch -n 0.25 -d ls -al .'
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+alias bashrc="code ~/.bashrc"
+alias zshrc="code ~/.zshrc"
+alias aliases="code ~/.shell/.aliases"
+alias funcs="code ~/.shell/.functions"
+alias srcbash="source ~/.bashrc"
+alias srczsh="source ~/.zshrc"
+alias hosts="code /etc/hosts"
+alias gitconfig="code ~/.gitconfig"
+alias npmconfig="code ~/.npmrc"
+alias count="ls -1 | wc -l"
+alias who="whoami"
+alias dusk="du -sk"
+alias volumes="cd /Volumes"
+alias ps="ps -x"
+alias ql="qlmanage -p '$@' >& /dev/null"
+alias show="sudo SetFile -a v"
+alias hide="sudo SetFile -a V"
+alias cpu="top -o cpu"
+alias act="sudo /Applications/Utilities/Activity\ Monitor.app/Contents/MacOS/Activity\ Monitor"
+alias lsdir="ls -l | egrep '^d'"
+alias lsfile="ls -l | egrep -v '^d'"
+alias watchdir="watch -n 0.25 -d ls -al ."
+alias showFiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
+alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
 alias copy="tr -d '\n' | pbcopy"
 
 ##Git
-alias gcm='git ci -m'
-alias gcb='git checkout -b'
-alias gh='git-open'
-alias ga='git add .'
-alias gca='git commit -a'
-alias gst='git status'
-alias gl='git log --pretty=oneline --abbrev-commit'
-alias master='git checkout master'
-alias develop='git checkout develop'
+alias gcm="git ci -m"
+alias gcb="git checkout -b"
+alias gh="git-open"
+alias ga="git add ."
+alias gca="git commit -a"
+alias gst="git status"
+alias gl="git log --pretty=oneline --abbrev-commit"
+alias master="git checkout master"
+alias develop="git checkout develop"
 
 ##Start Apache server
-alias astart='sudo apachectl start'
-alias astop='sudo apachectl stop'
+alias astart="sudo apachectl start"
+alias astop="sudo apachectl stop"
 
 
-alias cat='ccat --bg=dark'
-alias python='python3'
+alias cat="ccat --bg=dark"
+alias python="python3"
 
-alias nodei='node --inspect'
-alias nodeibr='node --debug-brk --inspect'
+alias nodei="node --inspect"
+alias nodeibr="node --debug-brk --inspect"
 
 ## NPM/Yarn
-alias yarnglobal='cd ~/.config/yarn/global/'
-alias npmlist='npm list --depth=0'
-alias npmlistg='npm -g list --depth=0'
-alias npmreset='trash node_modules/ package-lock.json && npm install'
-alias yarnreset='trash node_modules/ yarn.lock && yarn'
-alias nr='npm run'
-alias run='npm run'
+alias yarnglobal="cd ~/.config/yarn/global/"
+alias npmlist="npm list --depth=0"
+alias npmlistg="npm -g list --depth=0"
+alias npmreset="trash node_modules/ package-lock.json && npm install"
+alias yarnreset="trash node_modules/ yarn.lock && yarn"
+alias nr="npm run"
+alias run="npm run"
+alias lsc="list-scripts"
 
 # Recursively remove all `node_modules` directories
-alias rmnodemodules='find . -name "node_modules" -exec rm -rf "{}" +'
+alias rmnodemodules="find . -name 'node_modules' -exec rm -rf '{}' +"
 
-alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
-
-alias dsp='display-standard-previewer'
+alias brewup="brew update; brew upgrade; brew prune; brew cleanup; brew doctor"
 
 ## thefuck alias
 eval $(thefuck --alias fuck)

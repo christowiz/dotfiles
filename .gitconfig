@@ -1,6 +1,6 @@
 [user]
 	name = Christopher Gwizdala
-	email = chrgwizd@publicisgroupe.net
+	email = christopher.gwizdala@gmail.com
   logallrefupdates = true
 
 [credential]
@@ -63,7 +63,7 @@
 	path =
 
 [mergetool "sourcetree"]
-	cmd = /Applications/Development Apps/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = ~/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [alias]
