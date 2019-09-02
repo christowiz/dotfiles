@@ -15,7 +15,6 @@ NPM_PACKAGES="$HOME/.npm-packages"
 PATH_TO_NPM_COMPLETION="$HOME/.npm-packages/lib/node_modules/npm-completion"
 source "$PATH_TO_NPM_COMPLETION"/npm-completion.sh
 
-
 ##EXPORTS
 ##Yarn exports
 export PATH="$HOME/.yarn/bin:$PATH"

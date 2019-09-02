@@ -1,6 +1,5 @@
 [user]
 	name = Christopher Gwizdala
-	email = christopher.gwizdala@gmail.com
   logallrefupdates = true
 
 [credential]
@@ -16,10 +15,10 @@
 
 [merge]
   log = true
-  c = ~/Applications/Development Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  c = ~/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
-  tool = opendiff
   defaultToUpstream = true
+  tool = opendiff
 
 [remote "origin"]
     push = HEAD
@@ -58,14 +57,6 @@
 [url "https://"]
   insteadOf = git://
 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-
-[mergetool "sourcetree"]
-	cmd = ~/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-
 [alias]
   c = commit
   cm = commit -m
@@ -98,10 +89,15 @@
   required = true
 [init]
   templatedir = ~/.git-templates
-[commit]
-	template = ~/.stCommitMsg
 [mergetool]
   keepBackup = false
 [rerere]
-  enabled = false
+  enabled = true
   autoupdate = true
+[commit]
+	template = ~/.stCommitMsg
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+	cmd = ~/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

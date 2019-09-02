@@ -8,6 +8,27 @@ alias projects="cd ~/Projects/"
 alias trampt="cd ~/Projects/Trampt/source/trampt_v2"
 alias osxinstall="cd ~/Projects/osx-install"
 
+#PlutoTV aliases
+alias pluto="cd ~/Documents/PlutoTV/repos"
+alias core="cd ~/Documents/PlutoTV/repos/app-webtech-core"
+alias watchfree="cd ~/Documents/PlutoTV/repos/app-webtech-vizio-watchfree"
+alias vizcore="cd ~/Documents/PlutoTV/repos/app-webtech-core-vizio"
+alias webtv="cd ~/Documents/PlutoTV/repos/app-webtech-webtv"
+
+alias swf="serve -n -s build/client"
+# alias wf="BUILD_ENV=development NODE_ENV=development npx webpack --config ./config/webpack/static.babel.js --progress --watch"
+alias wfdev="run build:development:static -- --progress --watch"
+alias wfprod="run build:production:static -- --progress --watch"
+alias wfdvox="DISABLE_VOX=true wfdev"
+alias wfpvox="DISABLE_VOX=true wfprod"
+alias wfdlog="LOG_TIME=true wfdev"
+alias wfplog="LOG_TIME=true wfprod"
+alias wfdlogvox="LOG_TIME=true DISABLE_VOX=true wfdev"
+alias wfplogvox="LOG_TIME=true DISABLE_VOX=true wfprod"
+alias x1log="LOG=true run start"
+alias awsbuwf="aws s3 sync s3://vizio-prod-pluto-tv ."
+
+
 
 #Applications
 # alias subl="/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
@@ -45,8 +66,8 @@ alias bashrc="code ~/.bashrc"
 alias zshrc="code ~/.zshrc"
 alias aliases="code ~/.shell/.aliases"
 alias funcs="code ~/.shell/.functions"
-alias srcbash="source ~/.bashrc"
-alias srczsh="source ~/.zshrc"
+alias srcbash="source ~/.bash_profile"
+alias srczsh="source ~/.zprofile"
 alias hosts="code /etc/hosts"
 alias gitconfig="code ~/.gitconfig"
 alias npmconfig="code ~/.npmrc"
@@ -68,15 +89,23 @@ alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall F
 alias copy="tr -d '\n' | pbcopy"
 
 ##Git
-alias gcm="git ci -m"
+alias gcm="git checkout -m"
 alias gcb="git checkout -b"
 alias gh="git-open"
 alias ga="git add ."
 alias gca="git commit -a"
+alias gamend="git commit --amend"
 alias gst="git status"
 alias gl="git log --pretty=oneline --abbrev-commit"
 alias master="git checkout master"
 alias develop="git checkout develop"
+alias gref="git rerere forget"
+alias gwa="git worktree add"
+alias gwl="git worktree list"
+alias gwp="git worktree prune"
+alias gwr="git worktree remove"
+alias gworkprune="gwp & trash"
+
 
 ##Start Apache server
 alias astart="sudo apachectl start"
@@ -95,14 +124,14 @@ alias npmlist="npm list --depth=0"
 alias npmlistg="npm -g list --depth=0"
 alias npmreset="trash node_modules/ package-lock.json && npm install"
 alias yarnreset="trash node_modules/ yarn.lock && yarn"
-alias nr="npm run"
-alias run="npm run"
+alias nrun="npm run"
+alias run="yarn"
 alias lsc="list-scripts"
 
 # Recursively remove all `node_modules` directories
 alias rmnodemodules="find . -name 'node_modules' -exec rm -rf '{}' +"
 
-alias brewup="brew update; brew upgrade; brew prune; brew cleanup; brew doctor"
+alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 ## thefuck alias
 eval $(thefuck --alias fuck)
