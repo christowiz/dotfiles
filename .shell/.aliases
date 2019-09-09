@@ -131,7 +131,7 @@ alias lsc="list-scripts"
 # Recursively remove all `node_modules` directories
 alias rmnodemodules="find . -name 'node_modules' -exec rm -rf '{}' +"
 
-alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
+alias brewup="brew update; brew upgrade; brew cleanup; brew doctor; brew cask outdated"
 
 ## thefuck alias
 eval $(thefuck --alias fuck)
