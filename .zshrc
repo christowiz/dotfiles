@@ -105,7 +105,6 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
-
 ## Autorun `nvm use`
 autoload -U add-zsh-hook
 load-nvmrc() {
@@ -128,11 +127,6 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
- # added for npm-completion https://github.com/Jephuff/npm-bash-completion
-PATH_TO_NPM_COMPLETION="/Users/gwizdalc/.nvm/versions/node/v8.10.0/lib/node_modules/npm-completion"
-PATH_TO_NPM_COMPLETION="/Users/gwizdalc/.nvm/versions/node/v10.15.3/lib/node_modules/npm-completion"
-PATH_TO_NPM_COMPLETION="/Users/gwizdalc/.nvm/versions/node/v10.16.0/lib/node_modules/npm-completion"
-source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -143,3 +137,5 @@ source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh
+
+export HOMEBREW_GITHUB_API_TOKEN=cdd44355cc60c93f7e2417f80562da155edf6470
