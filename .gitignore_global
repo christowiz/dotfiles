@@ -35,3 +35,6 @@ storybook-static/
 *OLD/
 coverage/
 .snyk
+
+# Private keys/tokens
+.not-public
