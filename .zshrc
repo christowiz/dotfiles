@@ -138,4 +138,8 @@ load-nvmrc
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh
 
-export HOMEBREW_GITHUB_API_TOKEN=cdd44355cc60c93f7e2417f80562da155edf6470
+# Private keys/tokens
+if [ -r ~/.not-public ]
+then
+    source ~/.not-public
+fi
