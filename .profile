@@ -35,5 +35,11 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
 [ -f $HOME/.shell/.aliases ] && . $HOME/.shell/.aliases
 [ -f $HOME/.shell/.functions ] && . $HOME/.shell/.functions
 
+# Private keys/tokens
+if [ -r ~/.not-public ]
+then
+    source ~/.not-public
+fi
+
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
