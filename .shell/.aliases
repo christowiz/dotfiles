@@ -5,7 +5,7 @@ alias tmp="cd ~/tmp"
 
 #Project aliases
 alias projects="cd ~/Projects/"
-alias trampt="cd ~/Documents/Personal/trampt_v2"
+alias trampt="cd ~/Projects/Trampt/source/trampt-client-web"
 alias osxinstall="cd ~/Projects/osx-install"
 
 #PlutoTV aliases
@@ -31,6 +31,7 @@ alias awsbuwf="aws s3 sync s3://vizio-prod-pluto-tv ."
 alias tivo="telnet 192.168.1.30"
 alias v2="run start -t livetv2"
 
+alias bundle="cd ~/Projects/chrome-extensions/npm-bundlephobia/"
 
 #Applications
 # alias subl="/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
@@ -54,6 +55,8 @@ alias tcstart="${CATALINA_HOME}/bin/catalina.sh start"
 alias tcstop="${CATALINA_HOME}/bin/catalina.sh stop"
 alias tcrestart="tcstop && echo 'Sleeping for 2 seconds' ; sleep 2 && tcstart"
 
+# Set editor
+alias edit="code"
 
 # RPi
 alias pihole="ssh pi@192.168.1.42"
@@ -66,18 +69,20 @@ alias ll="ls -al"
 alias la="ls -a"
 
 #Utilities
-alias bashrc="code ~/.bashrc"
-alias zshrc="code ~/.zshrc"
-alias aliases="code ~/.shell/.aliases"
-alias funcs="code ~/.shell/.functions"
+alias bashrc="edit ~/.bashrc"
+alias zshrc="edit ~/.zshrc"
+alias aliases="edit ~/.shell/.aliases"
+alias funcs="edit ~/.shell/.functions"
 alias srcbash="source ~/.bash_profile"
 alias srczsh="source ~/.zprofile"
-alias hosts="code /etc/hosts"
-alias npmconfig="code ~/.npmrc"
+alias hosts="edit /etc/hosts"
+alias gitconfig="edit ~/.gitconfig"
+alias npmconfig="edit ~/.npmrc"
+alias volumes="cd /Volumes"
+
 alias count="ls -1 | wc -l"
 alias who="whoami"
 alias dusk="du -sk"
-alias volumes="cd /Volumes"
 alias ps="ps -x"
 alias ql="qlmanage -p '$@' >& /dev/null"
 alias show="sudo SetFile -a v"
@@ -90,7 +95,9 @@ alias watchdir="watch -n 0.25 -d ls -al ."
 alias showFiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
 alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
 alias copy="tr -d '\n' | pbcopy"
+
 alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime 0"
+
 
 ##Git
 alias gcm="git checkout -m"
@@ -102,12 +109,14 @@ alias gamend="git commit --amend"
 alias gst="git status"
 alias gp="git pull"
 alias gpush="git push"
+alias gpop="git stash pop"
 alias gl="git log --pretty=oneline --abbrev-commit"
 alias master="git checkout master"
 alias develop="git checkout develop"
 alias trunk="git sw trunk"
-alias gref="git rerere forget"
+alias forgetre="git rerere forget"
 alias gredelete="rm -rf .git/rr-cache"
+alias gw="git worktree"
 alias gwa="git worktree add"
 alias gwl="git worktree list"
 alias gwp="git worktree prune"
@@ -116,7 +125,6 @@ alias gworkprune="gwp & trash"
 alias syncdevelop="git stash save -u 'temp' ; git merge develop ; git stash pop"
 alias synctrunk="git stash save -u 'temp' ; git rebase trunk ; git stash pop"
 alias last="git co -"
-alias gitconfig="code ~/.gitconfig"
 alias gitorphaned="LANG=en git branch --format='%(if:equals=gone)%(upstream:track,nobracket)%(then)%(refname:short)%(end)' | grep '.'"
 # alias gss="git stash && git checkout '$@' ; git stash pop"
 alias stash="git stash"
@@ -136,6 +144,8 @@ alias python="python3"
 
 alias nodei="node --inspect"
 alias nodeibr="node --debug-brk --inspect"
+alias ni="n $(cat .nvmrc)"
+alias nu="n use $(cat .nvmrc)"
 
 ## NPM/Yarn
 alias yarnglobal="cd ~/.config/yarn/global/"
@@ -156,8 +166,12 @@ alias brewup="brew update ;\
             brew doctor ;\
             echo \"Checking for outdated Cask installations\" ;\
             brew cask outdated"
+
 alias installglobalnpm="$HOME/.shell/./npm-global-install.sh"
 alias shell='echo ${SHELL}'
+
+## Tell zsh not to correct names when running commands
+alias next="nocorrect next"
 
 ## thefuck alias
 eval $(thefuck --alias fuck)
