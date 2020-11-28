@@ -1,5 +1,6 @@
 [user]
 	name = Christopher Gwizdala
+	email = christopher.gwizdala@gmail.com
   logallrefupdates = true
 
 [credential]
@@ -18,7 +19,7 @@
   c = ~/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
   defaultToUpstream = true
-  tool = opendiff
+	tool = opendiff
 
 [remote "origin"]
     push = HEAD
@@ -61,10 +62,16 @@
   c = commit
   cm = commit -m
   co = checkout
+  cot = checkout -t origin/
+  cobr = checkout -b
   # coless = !"f() { echo 'Checking out: '$1; git co $1; echo 'Building LESS files'; grunt lessDev; }; f"
   st = status
   br = branch
   bra = branch -a
+  brd = branch -d
+  brD = branch -D
+  sw = switch
+  swbr = switch -c
   lg = "log --pretty=format:'%h - %an, %ar : %s' --stat"
   lgg = "log --graph --decorate --oneline"
   pp = !"echo 'Pull'; git pull; echo 'Push'; git push origin `git bn`"
@@ -81,6 +88,7 @@
 
   gui = !sh -c '/usr/local/bin/git/libexec/git-core/git-gui'
 
+  fetchall = fetch --all --tags --prune
 
 [filter "lfs"]
   clean = git-lfs clean -- %f
@@ -90,7 +98,7 @@
 [init]
   templatedir = ~/.git-templates
 [mergetool]
-  keepBackup = false
+	keepBackup = false
 [rerere]
   enabled = true
   autoupdate = true
@@ -98,6 +106,10 @@
 	template = ~/.stCommitMsg
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 [mergetool "sourcetree"]
 	cmd = ~/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[mergetool "gitblade"]
+	cmd = \"~/Applications/GitBlade.app/Contents/MacOS/GitBlade\" -c \"\"
 	trustExitCode = true

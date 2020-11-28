@@ -3,13 +3,12 @@
 [ -f ~/.profile ]   && . ~/.profile
 [ -f ${HOME}/.iterm2/.iterm2_shell_integration.zsh ] && . ${HOME}/.iterm2/.iterm2_shell_integration.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-setopt nocorrectall; setopt correct
-
-# Private keys/tokens
-if [ -r ~/.not-public ]
-then
-    source ~/.not-public
+# Enable nvm if available
+if [ -f ~/.nvm/nvm.sh ]; then
+  source ~/.nvm/nvm.sh
 fi
+
+# setopt nocorrectall; setopt correct

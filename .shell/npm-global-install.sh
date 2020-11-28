@@ -1,0 +1,21 @@
+NPM_APPS=(
+  alfred-bundlephobia
+  degit
+  fkill-cli
+  git-alias
+  git-open
+  list-scripts
+  ndb
+  ndb
+  node-inspector
+  npm-check-unused
+  npm-check-updates
+  npm-name-cli
+  npm@latest
+  pure-prompt
+  react-devtools
+  serve
+  tldr
+  trash-cli
+)
+npm install -g ${NPM_APPS[@]}

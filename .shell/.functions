@@ -1,9 +1,39 @@
+# launch tivo with debugging port
+# function tivo() {
+# 	launch goto web:"$1?tivo_browser_args=--remote-debugging-port=9222"
+# }
+
+# show dependency graph
+function deptree() {
+	local src=""
+	echo $1
+	if [ -z "$1" ]; then
+		src="src"
+	else
+		src=$1
+	fi
+	# echo $src
+	depcruise --include-only "^${src}" --ts-config ./tsconfig.json --webpack-config ./webpack.config.js --output-type dot $src | dot -T svg > dependencygraph.svg
+}
+
 function copy() {
     `$1 | tr -d '\n' | pbcopy`;
 }
 
 function shell() {
     chsh -s $(which $1)
+}
+
+function gitsyncbr() {
+	git stash save -u 'temp' ; git rebase $1 ; git stash pop
+}
+
+function gitswbr() {
+	git stash save -u 'temp' ; git sw $1 ; git stash pop
+}
+
+function gcot() {
+	git co -t origin/$1
 }
 
 #Colorized man pages
@@ -95,6 +125,7 @@ function fs() {
 	fi
 }
 
+## Git
 # Use Git’s colored diff when available
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
@@ -272,4 +303,10 @@ function unmark {
 }
 function marks {
     \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
+}
+
+
+function awsmfa() {
+	CMD=`aws sts get-session-token --serial-number arn:aws:iam::157385605725:mfa/chris.gwizdala --token-code $1`
+	echo "$CMD"
 }

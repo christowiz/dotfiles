@@ -5,7 +5,7 @@ alias tmp="cd ~/tmp"
 
 #Project aliases
 alias projects="cd ~/Projects/"
-alias trampt="cd ~/Projects/Trampt/source/trampt_v2"
+alias trampt="cd ~/Documents/Personal/trampt_v2"
 alias osxinstall="cd ~/Projects/osx-install"
 
 #PlutoTV aliases
@@ -13,7 +13,7 @@ alias pluto="cd ~/Documents/PlutoTV/repos"
 alias core="cd ~/Documents/PlutoTV/repos/app-webtech-core"
 alias watchfree="cd ~/Documents/PlutoTV/repos/app-webtech-vizio-watchfree"
 alias vizcore="cd ~/Documents/PlutoTV/repos/app-webtech-core-vizio"
-alias webtv="cd ~/Documents/PlutoTV/repos/app-webtech-webtv"
+alias webtvrepo="cd ~/Documents/PlutoTV/repos/webtv"
 alias chromecast="cd ~/Documents/PlutoTV/repos/chromecast"
 
 alias swf="serve -n -s build/client"
@@ -28,7 +28,8 @@ alias wfdlogvox="LOG_TIME=true DISABLE_VOX=true wfdev"
 alias wfplogvox="LOG_TIME=true DISABLE_VOX=true wfprod"
 alias x1log="LOG=true run start"
 alias awsbuwf="aws s3 sync s3://vizio-prod-pluto-tv ."
-
+alias tivo="telnet 192.168.1.30"
+alias v2="run start -t livetv2"
 
 
 #Applications
@@ -39,7 +40,7 @@ alias sourcetree="source ~/.bash_profile && open /Applications/Development\ Apps
 ##Changes app reset
 alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
 ##Launch Chrome
-alias chrome="/Applications/Browsers/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+alias chrome="~/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --autoplay-policy=no-user-gesture-required"
 ##Launch Canary
 alias canary="/Applications/Browsers/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 # alias chromessl="open -a /Applications/Browsers/Google\ Chrome\ SSL.app --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
@@ -72,7 +73,6 @@ alias funcs="code ~/.shell/.functions"
 alias srcbash="source ~/.bash_profile"
 alias srczsh="source ~/.zprofile"
 alias hosts="code /etc/hosts"
-alias gitconfig="code ~/.gitconfig"
 alias npmconfig="code ~/.npmrc"
 alias count="ls -1 | wc -l"
 alias who="whoami"
@@ -90,6 +90,7 @@ alias watchdir="watch -n 0.25 -d ls -al ."
 alias showFiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
 alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
 alias copy="tr -d '\n' | pbcopy"
+alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime 0"
 
 ##Git
 alias gcm="git checkout -m"
@@ -104,14 +105,26 @@ alias gpush="git push"
 alias gl="git log --pretty=oneline --abbrev-commit"
 alias master="git checkout master"
 alias develop="git checkout develop"
+alias trunk="git sw trunk"
 alias gref="git rerere forget"
+alias gredelete="rm -rf .git/rr-cache"
 alias gwa="git worktree add"
 alias gwl="git worktree list"
 alias gwp="git worktree prune"
 alias gwr="git worktree remove"
 alias gworkprune="gwp & trash"
 alias syncdevelop="git stash save -u 'temp' ; git merge develop ; git stash pop"
+alias synctrunk="git stash save -u 'temp' ; git rebase trunk ; git stash pop"
 alias last="git co -"
+alias gitconfig="code ~/.gitconfig"
+alias gitorphaned="LANG=en git branch --format='%(if:equals=gone)%(upstream:track,nobracket)%(then)%(refname:short)%(end)' | grep '.'"
+# alias gss="git stash && git checkout '$@' ; git stash pop"
+alias stash="git stash"
+alias stashs="git stash save -u"
+alias gpop="git stash pop"
+alias gcprun="git gc --prune=now"
+alias hash="git rev-parse HEAD"
+alias shorthash="git rev-parse --short HEAD"
 
 ##Start Apache server
 alias astart="sudo apachectl start"
@@ -144,6 +157,7 @@ alias brewup="brew update ;\
             echo \"Checking for outdated Cask installations\" ;\
             brew cask outdated"
 alias installglobalnpm="$HOME/.shell/./npm-global-install.sh"
+alias shell='echo ${SHELL}'
 
 ## thefuck alias
 eval $(thefuck --alias fuck)

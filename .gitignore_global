@@ -31,10 +31,14 @@ settings.json
 storybook-static/
 
 .DS_Store
-*.bak
 *OLD/
 coverage/
 .snyk
 
-# Private keys/tokens
-.not-public
+# Backup files
+**/*.bu*
+**/*.BU*
+**/*.bak*
+**/*.bakup*
+**/*.backup*
+build-core-envs.sh

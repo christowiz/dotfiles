@@ -71,7 +71,10 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
     copyfile
     extract
+    # git
     gitfast
+    git-extras
+    git-prompt
     jsontools
     npm
     zsh-autosuggestions
@@ -137,3 +140,9 @@ load-nvmrc
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh
+
+# Private keys/tokens
+if [ -r ~/.not-public ]
+then
+    source ~/.not-public
+fi
