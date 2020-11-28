@@ -1,6 +1,6 @@
 [user]
 	name = Christopher Gwizdala
-	email = christopher.gwizdala@gmail.com
+	email = 597282+christowiz@users.noreply.github.com
   logallrefupdates = true
 
 [credential]
@@ -19,7 +19,7 @@
   c = ~/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
   defaultToUpstream = true
-	tool = opendiff
+  tool = opendiff
 
 [remote "origin"]
     push = HEAD
@@ -62,7 +62,6 @@
   c = commit
   cm = commit -m
   co = checkout
-  cot = checkout -t origin/
   cobr = checkout -b
   # coless = !"f() { echo 'Checking out: '$1; git co $1; echo 'Building LESS files'; grunt lessDev; }; f"
   st = status
@@ -88,7 +87,7 @@
 
   gui = !sh -c '/usr/local/bin/git/libexec/git-core/git-gui'
 
-  fetchall = fetch --all --tags --prune
+  fetchall = fetch --all --prune --tags
 
 [filter "lfs"]
   clean = git-lfs clean -- %f
