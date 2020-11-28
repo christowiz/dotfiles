@@ -3,7 +3,7 @@ export TERM="xterm-256color"
 fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/local/sbin:$HOME/.basher/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -14,7 +14,8 @@ export DEFAULT_USER="$(whoami)"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+# ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -108,6 +109,8 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
+eval "$(basher init -)"
+
 ## Autorun `nvm use`
 autoload -U add-zsh-hook
 load-nvmrc() {
@@ -140,9 +143,3 @@ load-nvmrc
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh
-
-# Private keys/tokens
-if [ -r ~/.not-public ]
-then
-    source ~/.not-public
-fi
