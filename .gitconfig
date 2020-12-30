@@ -62,13 +62,13 @@
   c = commit
   cm = commit -m
   co = checkout
-  cobr = checkout -b
   # coless = !"f() { echo 'Checking out: '$1; git co $1; echo 'Building LESS files'; grunt lessDev; }; f"
   st = status
   br = branch
   bra = branch -a
   brd = branch -d
   brD = branch -D
+  cpbr = branch --show-current | pbcopy
   sw = switch
   swbr = switch -c
   lg = "log --pretty=format:'%h - %an, %ar : %s' --stat"
@@ -82,7 +82,8 @@
   # Show unpushed files
   notpushed = log --branches --not --remotes
   mt = mergetool
-
+  undo = reset HEAD~1 --mixed
+  res = !git reset --hard
   ltag = tag --list
 
   gui = !sh -c '/usr/local/bin/git/libexec/git-core/git-gui'
@@ -112,3 +113,5 @@
 [mergetool "gitblade"]
 	cmd = \"~/Applications/GitBlade.app/Contents/MacOS/GitBlade\" -c \"\"
 	trustExitCode = true
+[pull]
+	rebase = true
