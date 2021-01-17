@@ -71,6 +71,7 @@
   brd = branch -d
   brD = branch -D
   cpbr = branch --show-current | pbcopy
+  case = mv --force
   sw = switch
   swbr = switch -c
   lg = "log --pretty=format:'%h - %an, %ar : %s' --stat"
