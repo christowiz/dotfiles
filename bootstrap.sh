@@ -6,7 +6,7 @@ function doIt() {
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
 		--exclude ".git" \
-		-av --no-perms . ~
+		-av --no-perms --omit-dir-times . ~
 }
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	doIt
