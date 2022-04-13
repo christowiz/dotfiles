@@ -1,9 +1,16 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export TERM="xterm-256color"
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/local/sbin:$HOME/.basher/bin:$PATH
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/local/sbin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -65,7 +72,7 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Standard plugins can be found in `~/.oh-my-zsh/plugins`/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
@@ -109,37 +116,9 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
-eval "$(basher init -)"
+# Disable Autocorrect
+alias next="nocorrect next"
 
-## Autorun `nvm use`
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gwizdalc/Documents/PlutoTV/repos/chromecast/node_modules/tabtab/.completions/slss.zsh
+# Git completion
+zstyle ':completion:*:*:git:*' script ${HOME}/.shell/_git/git-completion.bash
+fpath=(${HOME}/.shell $fpath)

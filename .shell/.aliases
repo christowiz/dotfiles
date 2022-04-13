@@ -8,28 +8,7 @@ alias projects="cd ~/Projects/"
 alias trampt="cd ~/Projects/Trampt/source/trampt-client-web"
 alias osxinstall="cd ~/Projects/osx-install"
 
-#PlutoTV aliases
-alias pluto="cd ~/Documents/PlutoTV/repos"
-alias core="cd ~/Documents/PlutoTV/repos/app-webtech-core"
-alias watchfree="cd ~/Documents/PlutoTV/repos/app-webtech-vizio-watchfree"
-alias vizcore="cd ~/Documents/PlutoTV/repos/app-webtech-core-vizio"
-alias webtvrepo="cd ~/Documents/PlutoTV/repos/webtv"
-alias chromecast="cd ~/Documents/PlutoTV/repos/chromecast"
-
 alias swf="serve -n -s build/client"
-# alias wf="BUILD_ENV=development NODE_ENV=development npx webpack --config ./config/webpack/static.babel.js --progress --watch"
-alias wfdev="npm run build:development:static -- --progress --watch"
-alias wfprod="npm run build:production:static -- --progress --watch"
-alias wfdvox="DISABLE_VOX=true wfdev"
-alias wfpvox="DISABLE_VOX=true wfprod"
-alias wfdlog="LOG_TIME=true wfdev"
-alias wfplog="LOG_TIME=true wfprod"
-alias wfdlogvox="LOG_TIME=true DISABLE_VOX=true wfdev"
-alias wfplogvox="LOG_TIME=true DISABLE_VOX=true wfprod"
-alias x1log="LOG=true run start"
-alias awsbuwf="aws s3 sync s3://vizio-prod-pluto-tv ."
-alias tivo="telnet 192.168.1.30"
-alias v2="run start -t livetv2"
 
 alias bundle="cd ~/Projects/chrome-extensions/npm-bundlephobia/"
 
@@ -40,12 +19,12 @@ alias ss="simple-server ."
 alias sourcetree="source ~/.bash_profile && open /Applications/Development\ Apps/SourceTree.app"
 ##Changes app reset
 alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
-##Launch Chrome
-alias chrome="~/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --autoplay-policy=no-user-gesture-required"
-##Launch Canary
-alias canary="/Applications/Browsers/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+##Launch Chromium
+alias chrome="/Applications/Browsers/Chromium.app/Contents/MacOS/Chromium"
 # alias chromessl="open -a /Applications/Browsers/Google\ Chrome\ SSL.app --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
-alias chromessl="/Applications/Browsers/Google\ Chrome\ SSL.app/Contents/MacOS/Google\ Chrome --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
+alias chromessl="/Applications/Browsers/Chromium\ SSL.app/Contents/MacOS/Chromium --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
+
+alias brave="~/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser"
 
 alias braveunsafe="~/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser --allow-running-insecure-content"
 
@@ -60,7 +39,6 @@ alias edit="code"
 
 # RPi
 alias pihole="ssh pi@192.168.1.42"
-
 
 #aliases
 alias ls="ls -F"
@@ -98,17 +76,17 @@ alias copy="tr -d '\n' | pbcopy"
 
 alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime 0"
 
-
 ##Git
-alias gcm="git checkout -m"
+alias gcm="git commit -m"
 alias gcb="git checkout -b"
 alias gh="git-open"
+alias gp="git pull"
+alias gpush="git push"
 alias ga="git add ."
 alias gca="git commit -a"
 alias gamend="git commit --amend"
+alias brcopy="git branch --show-current | pbcopy"
 alias gst="git status"
-alias gp="git pull"
-alias gpush="git push"
 alias gpop="git stash pop"
 alias gl="git log --pretty=oneline --abbrev-commit"
 alias master="git checkout master"
@@ -133,11 +111,11 @@ alias gpop="git stash pop"
 alias gcprun="git gc --prune=now"
 alias hash="git rev-parse HEAD"
 alias shorthash="git rev-parse --short HEAD"
+alias cpbr="git branch | grep '^\*' | cut -d' ' -f2 | pbcopy"
 
 ##Start Apache server
 alias astart="sudo apachectl start"
 alias astop="sudo apachectl stop"
-
 
 alias cat="ccat --bg=dark"
 alias python="python3"
@@ -164,14 +142,14 @@ alias brewup="brew update ;\
             brew upgrade ;\
             brew cleanup ;\
             brew doctor ;\
-            echo \"Checking for outdated Cask installations\" ;\
-            brew cask outdated"
+            brew outdated"
 
 alias installglobalnpm="$HOME/.shell/./npm-global-install.sh"
 alias shell='echo ${SHELL}'
 
-## Tell zsh not to correct names when running commands
-alias next="nocorrect next"
-
 ## thefuck alias
 eval $(thefuck --alias fuck)
+
+## NOCORRECT
+## Tell zsh not to correct names when running commands
+alias next="nocorrect next"

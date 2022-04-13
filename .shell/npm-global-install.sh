@@ -1,19 +1,22 @@
 NPM_APPS=(
   alfred-bundlephobia
+  alfred-updater
   degit
+  depcheck
   fkill-cli
   git-alias
   git-open
+  goops
   list-scripts
-  ndb
-  ndb
+  liver-server
   node-inspector
+  npkill
+  npm-check
   npm-check-unused
   npm-check-updates
-  npm-name-cli
+  npm-completion
+  npm-ls-scripts
   npm@latest
-  pure-prompt
-  react-devtools
   serve
   tldr
   trash-cli
