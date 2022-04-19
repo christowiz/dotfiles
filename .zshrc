@@ -116,9 +116,13 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
-# Disable Autocorrect
-alias next="nocorrect next"
-
 # Git completion
 zstyle ':completion:*:*:git:*' script ${HOME}/.shell/_git/git-completion.bash
 fpath=(${HOME}/.shell $fpath)
+
+# Add no completion for terminal commands
+if [ -f ~/.zsh_nocorrect ]; then
+    while read -r COMMAND; do
+        alias $COMMAND="nocorrect $COMMAND"
+    done < ~/.zsh_nocorrect
+fi
