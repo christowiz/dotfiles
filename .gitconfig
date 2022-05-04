@@ -8,7 +8,7 @@
 
 [core]
   editor = code -n -w
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/cgwizdala/.gitignore_global
   warnambiguousrefs = false
   ignorecase = false
   autocrlf = false
@@ -16,7 +16,7 @@
 
 [merge]
   log = true
-  c = ~/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  c = ~/Applications/Development/ Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
   defaultToUpstream = true
   tool = opendiff
@@ -70,7 +70,6 @@
   bra = branch -a
   brd = branch -d
   brD = branch -D
-  cpbr = branch --show-current | pbcopy
   case = mv --force
   sw = switch
   swbr = switch -c
@@ -106,14 +105,14 @@
   enabled = true
   autoupdate = true
 [commit]
-	template = ~/.stCommitMsg
+	template = /Users/cgwizdala/.stCommitMsg
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 [mergetool]
 	keepBackup = false
 [mergetool "sourcetree"]
-	cmd = ~/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Development Apps/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [mergetool "gitblade"]
 	cmd = \"~/Applications/GitBlade.app/Contents/MacOS/GitBlade\" -c \"\"

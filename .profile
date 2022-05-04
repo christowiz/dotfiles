@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/profile.pre.bash"
 [ -f /etc/profile ] && . /etc/profile
 [ -f $HOME/.shell/.aliases ] && . $HOME/.shell/.aliases
 [ -f $HOME/.shell/.functions ] && . $HOME/.shell/.functions
@@ -10,7 +12,7 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 NPM_PACKAGES="$HOME/.npm-packages"
 
 # added for npm-completion https://github.com/Jephuff/npm-bash-completion
-# PATH_TO_NPM_COMPLETION="~/.npm-packages/lib/node_modules/npm-completion"
+# PATH_TO_NPM_COMPLETION="/Users/cgwizdala/.npm-packages/lib/node_modules/npm-completion"
 # source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
 ## PATH EXPORTS
@@ -20,7 +22,7 @@ PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/local/sbin:$PATH"
 [ -f $HOME/.yarn ] && PATH="$HOME/.yarn/bin:$PATH"
 
 #NPM global packages
-[ -f $HOME/$NPM_PACKAGES ] && PATH="$NPM_PACKAGES/bin:$PATH"
+PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Ruby path
 PATH="/usr/local/opt/ruby/bin:$PATH"
@@ -125,3 +127,6 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/profile.post.bash"

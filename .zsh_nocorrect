@@ -1,4 +1,7 @@
 next
 node
 storybook
+npx storybook
+run storybook
+yarn storybook
 subl

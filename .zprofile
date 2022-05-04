@@ -1,7 +1,12 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/zprofile.pre.zsh"
 # Make shell check its window size after a process completes
 
 [ -f ~/.profile ] && . ~/.profile
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+unsetopt correct
+DISABLE_CORRECTION="true"
 # setopt nocorrectall; setopt correct
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/zprofile.post.zsh"

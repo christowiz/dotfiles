@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -21,7 +23,6 @@ export DEFAULT_USER="$(whoami)"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel9k/powerlevel9k"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
@@ -72,19 +73,19 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in `~/.oh-my-zsh/plugins`/*
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    copyfile
-    extract
+    # copyfile
+    # extract
     # git
     gitfast
-    git-extras
-    git-prompt
-    jsontools
-    npm
+    # git-extras
+    # git-prompt
+    # jsontools
+    # npm
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -116,9 +117,42 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
+# eval "$(basher init -)"
+
+## Autorun `nvm use`
+# autoload -U add-zsh-hook
+# load-nvmrc() {
+#   local node_version="$(nvm version)"
+#   local nvmrc_path="$(nvm_find_nvmrc)"
+
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$node_version" ]; then
+#       nvm use
+#     fi
+#   elif [ "$node_version" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
+# add-zsh-hook chpwd load-nvmrc
+# load-nvmrc
+# export PATH="/usr/local/sbin:$PATH"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Disable Autocorrect
+# alias next="nocorrect next"
+unsetopt correct_all
+
 # Git completion
 zstyle ':completion:*:*:git:*' script ${HOME}/.shell/_git/git-completion.bash
 fpath=(${HOME}/.shell $fpath)
+
 
 # Add no completion for terminal commands
 if [ -f ~/.zsh_nocorrect ]; then
@@ -126,3 +160,13 @@ if [ -f ~/.zsh_nocorrect ]; then
         alias $COMMAND="nocorrect $COMMAND"
     done < ~/.zsh_nocorrect
 fi
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/zshrc.post.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/cgwizdala/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/cgwizdala/bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/cgwizdala/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/cgwizdala/bin/google-cloud-sdk/completion.zsh.inc'; fi
+eval "$(atuin init zsh)"

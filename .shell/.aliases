@@ -63,8 +63,8 @@ alias who="whoami"
 alias dusk="du -sk"
 alias ps="ps -x"
 alias ql="qlmanage -p '$@' >& /dev/null"
-alias show="sudo SetFile -a v"
-alias hide="sudo SetFile -a V"
+alias show="chflags nohidden"
+alias hide="chflags hidden"
 alias cpu="top -o cpu"
 alias act="sudo /Applications/Utilities/Activity\ Monitor.app/Contents/MacOS/Activity\ Monitor"
 alias lsdir="ls -l | egrep '^d'"
@@ -79,7 +79,7 @@ alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver 
 ##Git
 alias gcm="git commit -m"
 alias gcb="git checkout -b"
-alias gh="git-open"
+alias gopen="git-open"
 alias gp="git pull"
 alias gpush="git push"
 alias ga="git add ."
@@ -122,8 +122,10 @@ alias python="python3"
 
 alias nodei="node --inspect"
 alias nodeibr="node --debug-brk --inspect"
-alias ni="n $(cat .nvmrc)"
-alias nu="n use $(cat .nvmrc)"
+
+## Uncomment if using NVM
+# alias ni="n $(cat .nvmrc)"
+# alias nu="n use $(cat .nvmrc)"
 
 ## NPM/Yarn
 alias yarnglobal="cd ~/.config/yarn/global/"
@@ -150,6 +152,9 @@ alias shell='echo ${SHELL}'
 ## thefuck alias
 eval $(thefuck --alias fuck)
 
+alias rm="trash"
+
 ## NOCORRECT
 ## Tell zsh not to correct names when running commands
 alias next="nocorrect next"
+alias storybook="nocorrect storybook"
