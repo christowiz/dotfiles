@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-TMP_DIR=tmp
+TMP_DIR=$(pwd)/tmp
 
 git pull origin master
 function doIt() {
@@ -7,7 +7,7 @@ function doIt() {
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
 		--exclude ".git" \
-		-av --no-perms --omit-dir-times . tmp
+		-av --no-perms --omit-dir-times . $TMP_DIR
 }
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	doIt
@@ -21,7 +21,7 @@ else
 fi
 unset doIt
 
-cp -R tmp/. ~/
+cp -R $TMP_DIR/. ~/
 
 if [ -n "$($SHELL -c 'echo $ZSH_VERSION')" ]; then
 	# assume Zsh
