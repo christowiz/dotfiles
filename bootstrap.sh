@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
-TMP_DIR=$(pwd)/tmp
+# TMP_DIR=tmp
+
+# mkdir tmp tmp2
 
 git pull origin master
 function doIt() {
 	rsync --exclude ".DS_Store" \
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
+		--exclude "tmp" \
+		--exclude "tmp2" \
 		--exclude ".git" \
-		-av --no-perms --omit-dir-times . $TMP_DIR
+		-av --no-perms --omit-dir-times . $HOME
 }
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	doIt
@@ -21,12 +25,14 @@ else
 fi
 unset doIt
 
-cp -R $TMP_DIR/. ~/
+# cp -RT tmp/. $HOME
 
-if [ -n "$($SHELL -c 'echo $ZSH_VERSION')" ]; then
+if [[ $(echo $0) =!= '/bin/zsh'* ]]; then
 	# assume Zsh
 	source ~/.zprofile
-elif [ -n "$($SHELL -c 'echo $BASH_VERSION')" ]; then
+elif [[ $(echo $0) == '/bin/bash'* ]]; then
 	# assume Bash
 	source ~/.bash_profile
 fi
+
+rm -rf tmp
