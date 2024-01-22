@@ -9,12 +9,6 @@
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegedabagacad
 
-NPM_PACKAGES="$HOME/.npm-packages"
-
-# added for npm-completion https://github.com/Jephuff/npm-bash-completion
-# PATH_TO_NPM_COMPLETION="/Users/cgwizdala/.npm-packages/lib/node_modules/npm-completion"
-# source $PATH_TO_NPM_COMPLETION/npm-completion.sh
-
 ## PATH EXPORTS
 PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/local/sbin:$PATH"
 
