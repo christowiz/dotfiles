@@ -13,20 +13,32 @@ function deptree() {
 		src=$1
 	fi
 	# echo $src
-	depcruise --include-only "^${src}" --ts-config ./tsconfig.json --webpack-config ./webpack.config.js --output-type dot $src | dot -T svg >dependencygraph.svg
+	pnpm dlx depcruise --include-only "^${src}" --ts-config ./tsconfig.json --webpack-config ./webpack.config.js --output-type dot $src | pnpm dlx dot -T svg >dependencygraph.svg
 }
 
 function copy() {
 	$($1 | tr -d '\n' | pbcopy)
 }
 
-function shell() {
+function chshell() {
 	chsh -s $(which $1)
 }
 
 function gitsyncbr() {
+	branch=${1:-trunk}
+	echo "---> git stash save -u 'temp'"
 	git stash save -u 'temp'
-	git rebase $1
+	echo "---> git sw trunk"
+	git sw trunk
+	echo "---> git fetch"
+	git fetch
+	echo "---> git pull"
+	git pull
+	echo "---> git co -"
+	git co -
+	echo "---> git rebase $branch"
+	git rebase $branch
+	echo "---> git stash pop"
 	git stash pop
 }
 
@@ -34,6 +46,14 @@ function gitswbr() {
 	git stash save -u 'temp'
 	git sw $1
 	git stash pop
+}
+
+function gitrmdir() {
+	git filter-repo --invert-paths --path $1
+	git reflog expire --expire=now --all && git gc --prune=now --aggressive
+	echo "'git-filter-repo' clears the remote information.  Reset origin and branch upstream using the following commands:"
+	echo "git remote add origin {URL_PATH}"
+	echo "git branch --set-upstream-to=origin/feature/{BRANCH} {BRANCH}"
 }
 
 function gcot() {
@@ -44,7 +64,7 @@ function git_branch_name() {
 	git rev-parse --abbrev-ref HEAD | xargs
 }
 
-function brename() {
+function gitbrename() {
 	git branch -m $(git_branch_name) $1
 }
 
@@ -80,7 +100,7 @@ function calc() {
 	if [[ "$result" == *.* ]]; then
 		# improve the output for decimal numbers
 		printf "$result" |
-			sed -e 's/^\./0./' $(# add "0" for cases like ".5"` \
+			sed -e 's/^\./0./' $( # add "0" for cases like ".5"` \
 				-e 's/^-\./-0./'
 			) \
 				-e 's/0*$//;s/\.$//' # add "0" for cases like "-.5"`\
@@ -307,24 +327,78 @@ function unquarantine() {
 	done
 }
 
-# Sym-link jumping
-# http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html?utm_source=hackernewsletter&utm_medium=email
-export MARKPATH=$HOME/.marks
-function jump {
-	cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
-}
-function mark {
-	mkdir -p "$MARKPATH"
-	ln -s "$(pwd)" "$MARKPATH/$1"
-}
-function unmark {
-	rm -i "$MARKPATH/$1"
-}
-function marks {
-	\ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
-}
-
 function awsmfa() {
 	CMD=$(aws sts get-session-token --serial-number arn:aws:iam::157385605725:mfa/chris.gwizdala --token-code $1)
 	echo "$CMD"
+}
+
+function run() {
+	if [[ -f bun.lockb ]]; then
+		echo "bun"
+		command bun "$@"
+	elif [[ -f pnpm-lock.yaml ]]; then
+		echo "pnpm"
+		command pnpm "$@"
+	elif [[ -f yarn.lock ]]; then
+		echo "yarn"
+		command yarn "$@"
+	elif [[ -f package-lock.json ]]; then
+		echo "npm"
+		command npm "$@"
+	else
+		echo "pnpm"
+		command pnpm "$@"
+	fi
+}
+
+function port() {
+	lsof -i tcp:$1
+}
+
+function chnode() {
+	help="Usage: chnode [version] [-r]\n
+  To list all locally installed versions of Node.js use no arguments\n
+  Example: chnode\n
+
+  To install a specific version of Node.js use the version number as the first argument\n
+  Example: chnode 14.17.0\n
+
+  To see all versions of Node.js available to install use the "-r" flag\n
+  Example: chnode -r\n"
+
+	if [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+		echo "Installing Node.js version $1"
+		return
+	elif [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+		echo $help
+		return
+	elif [ "$1" = "-r" ]; then
+		echo 'Remote versions of Node.js available: '
+		flag="--remote"
+	elif [ -z "$1" ]; then
+		echo 'Locally installed versions of Node.js available: '
+		flag=""
+	else
+		echo "\nUnknown argument \"$1\"\n"
+		showHelp
+
+		return
+	fi
+
+	IFS=$'\n' arr=($(pnpm env list $flag))
+	PS3="Select version of Node.js: "
+
+	select opt in "${arr[@]}"; do
+		if [[ -v arr[$REPLY] ]]; then
+			echo "Switching to Node.js version $opt"
+			pnpm env use --global $opt
+			break
+		else
+			echo "invalid option $REPLY"
+		fi
+	done
+}
+
+function rmrecursive() {
+	find . -name '$1' -exec rm -rf '{}' +
 }

@@ -1,24 +1,23 @@
 NPM_APPS=(
   alfred-bundlephobia
-  alfred-updater
   degit
   depcheck
   fkill-cli
   git-alias
-  git-open
   goops
+  http-server
   list-scripts
-  liver-server
-  node-inspector
+  live-server
   npkill
   npm-check
   npm-check-unused
   npm-check-updates
+  npm-check
   npm-completion
   npm-ls-scripts
   npm@latest
+  nx
   serve
-  tldr
   trash-cli
 )
 npm install -g ${NPM_APPS[@]}

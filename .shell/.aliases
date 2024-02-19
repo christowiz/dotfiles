@@ -7,6 +7,19 @@ alias tmp="cd ~/tmp"
 alias projects="cd ~/Projects/"
 alias trampt="cd ~/Projects/Trampt/source/trampt-client-web"
 alias osxinstall="cd ~/Projects/osx-install"
+alias gettoken="sh /Volumes/Music/Trampt/scripts/get_token.sh"
+
+#Work aliases
+alias pluto="cd ~/Projects/PlutoTV/source"
+# alias trunk="cd ~/Projects/PlutoTV/source/trunk"
+alias xp="cd ~/Projects/PlutoTV/source/apps-xp"
+alias tools="cd ~/Projects/PlutoTV/source/webctv-tools"
+alias vulcan="cd ~/Projects/PlutoTV/source/webctv-vulcan"
+
+#AWS aliases
+alias amp="amplify"
+
+alias bearertoken="curl -s -XGET 'https://service-bootstrap.plutopreprod.tv/v4/start?appName=comcastx1&appVersion=6.9.0-alpha-c76db74dd3&buildVersion=6.9.0-alpha-c76db74dd3&clientID=d915b260-2f8f-11ed-909b-abcbba0eec14&clientDeviceType=6&clientModelNumber=Chrome&deviceMake=comcast&deviceModel=Chrome&deviceType=comcastx1&deviceVersion=2.5' | jq -r '.sessionToken' | pbcopy"
 
 alias swf="serve -n -s build/client"
 
@@ -16,7 +29,7 @@ alias bundle="cd ~/Projects/chrome-extensions/npm-bundlephobia/"
 # alias subl="/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 alias ss="simple-server ."
 ##SourceTree alias so it can find the `node` executable
-alias sourcetree="source ~/.bash_profile && open /Applications/Development\ Apps/SourceTree.app"
+# alias sourcetree="source ~/.zprofile && open ~/Applications/SourceTree.app"
 ##Changes app reset
 alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
 ##Launch Chromium
@@ -49,13 +62,16 @@ alias la="ls -a"
 #Utilities
 alias bashrc="edit ~/.bashrc"
 alias zshrc="edit ~/.zshrc"
+alias zprofile="edit ~/.zprofile"
 alias aliases="edit ~/.shell/.aliases"
+alias lsaliases="edit ~/.shell/.aliases"
 alias funcs="edit ~/.shell/.functions"
 alias srcbash="source ~/.bash_profile"
-alias srczsh="source ~/.zprofile"
+alias srczsh="source ~/.zshrc"
+alias srczp="source ~/.zprofile"
 alias hosts="edit /etc/hosts"
-alias gitconfig="edit ~/.gitconfig"
-alias npmconfig="edit ~/.npmrc"
+alias gitconfigg="edit ~/.gitconfig"
+alias npmconfigg="edit ~/.npmrc"
 alias volumes="cd /Volumes"
 
 alias count="ls -1 | wc -l"
@@ -72,7 +88,8 @@ alias lsfile="ls -l | egrep -v '^d'"
 alias watchdir="watch -n 0.25 -d ls -al ."
 alias showFiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
 alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
-alias copy="tr -d '\n' | pbcopy"
+# alias copy="tr -d '\n' | pbcopy"
+alias cplast="fc -ln -1 | awk '{\$1=\$1}1' | pbcopy"
 
 alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime 0"
 
@@ -80,6 +97,7 @@ alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver 
 alias gcm="git commit -m"
 alias gcb="git checkout -b"
 alias gopen="git-open"
+alias ghome="git-open"
 alias gp="git pull"
 alias gpush="git push"
 alias ga="git add ."
@@ -92,6 +110,8 @@ alias gl="git log --pretty=oneline --abbrev-commit"
 alias master="git checkout master"
 alias develop="git checkout develop"
 alias trunk="git sw trunk"
+alias dev="git sw dev"
+alias main="git sw main"
 alias forgetre="git rerere forget"
 alias gredelete="rm -rf .git/rr-cache"
 alias gw="git worktree"
@@ -100,45 +120,59 @@ alias gwl="git worktree list"
 alias gwp="git worktree prune"
 alias gwr="git worktree remove"
 alias gworkprune="gwp & trash"
-alias syncdevelop="git stash save -u 'temp' ; git merge develop ; git stash pop"
-alias synctrunk="git stash save -u 'temp' ; git rebase trunk ; git stash pop"
+alias syncdevelop="git stash save -u 'temp' && git merge develop && git stash pop"
+alias synctrunk="git stash save -u 'temp' && git rebase trunk && git stash pop"
 alias last="git co -"
 alias gitorphaned="LANG=en git branch --format='%(if:equals=gone)%(upstream:track,nobracket)%(then)%(refname:short)%(end)' | grep '.'"
 # alias gss="git stash && git checkout '$@' ; git stash pop"
 alias stash="git stash"
 alias stashs="git stash save -u"
+alias stashtemp="git stash save -u 'temp"
 alias gpop="git stash pop"
 alias gcprun="git gc --prune=now"
 alias hash="git rev-parse HEAD"
 alias shorthash="git rev-parse --short HEAD"
 alias cpbr="git branch | grep '^\*' | cut -d' ' -f2 | pbcopy"
+alias gitconfig="code .git/config"
+alias openpr="gh pr view --web"
 
 ##Start Apache server
 alias astart="sudo apachectl start"
 alias astop="sudo apachectl stop"
 
-alias cat="ccat --bg=dark"
+# alias cat="ccat --bg=dark"
+alias cat="bat"
 alias python="python3"
-
-alias nodei="node --inspect"
-alias nodeibr="node --debug-brk --inspect"
 
 ## Uncomment if using NVM
 # alias ni="n $(cat .nvmrc)"
 # alias nu="n use $(cat .nvmrc)"
 
-## NPM/Yarn
-alias yarnglobal="cd ~/.config/yarn/global/"
+## NPM/Yarn/PNPM
+alias lsc="list-scripts"
+alias npmig="sh ~/.shell/npm-global-install.sh"
 alias npmlist="npm list --depth=0"
 alias npmlistg="npm -g list --depth=0"
 alias npmreset="trash node_modules/ package-lock.json && npm install"
-alias yarnreset="trash node_modules/ yarn.lock && yarn"
 alias nrun="npm run"
-alias run="yarn"
-alias lsc="list-scripts"
+alias nx="pnpm nx"
+alias nxr="nx reset"
+alias pnpmi="pnpm install"
+alias pnpx="pnpm dlx"
+alias upgradepnpm="curl -fsSL https://get.pnpm.io/install.sh | sh -"
+alias use="fnm use"
+alias yarnglobal="cd ~/.config/yarn/global/"
+alias yarnreset="trash node_modules/ yarn.lock && yarn"
+
+##########
+# NODE
+##########
+alias nodei="node --inspect"
+alias nodeibr="node --debug-brk --inspect"
+# alias chnode="pnpm env use --global"
 
 # Recursively remove all `node_modules` directories
-alias rmnodemodules="find . -name 'node_modules' -exec rm -rf '{}' +"
+alias rmnodemodules="find . -type d -name 'node_modules' -exec rm -rf '{}' +"
 
 alias brewup="brew update ;\
             brew upgrade ;\
@@ -146,15 +180,17 @@ alias brewup="brew update ;\
             brew doctor ;\
             brew outdated"
 
-alias installglobalnpm="$HOME/.shell/./npm-global-install.sh"
-alias shell='echo ${SHELL}'
+alias shell="echo ${SHELL}"
+# alias rm="trash"
 
-## thefuck alias
-eval $(thefuck --alias fuck)
-
-alias rm="trash"
+## JAVA
+# alias java8='export JAVA_HOME=$JAVA_8_HOME'
+# alias java11='export JAVA_HOME=$JAVA_11_HOME'
 
 ## NOCORRECT
 ## Tell zsh not to correct names when running commands
+alias bat="nocorrect bat"
+alias env="nocorrect env"
 alias next="nocorrect next"
 alias storybook="nocorrect storybook"
+alias stree="nocorrect stree"
