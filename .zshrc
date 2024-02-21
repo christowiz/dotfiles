@@ -78,16 +78,20 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    # copyfile
-    # extract
-    # git
-    gitfast
-    # git-extras
-    # git-prompt
-    # jsontools
-    # npm
-    zsh-autosuggestions
-    zsh-syntax-highlighting
+  autojump
+  # copyfile
+  # extract
+  # git
+  gitfast
+  # git-extras
+  # git-prompt
+  # jsontools
+  # jump
+  # npm
+  # nx-completion
+  # vscode
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -149,9 +153,12 @@ source $ZSH/oh-my-zsh.sh
 # alias next="nocorrect next"
 unsetopt correct_all
 
-# Git completion
-zstyle ':completion:*:*:git:*' script ${HOME}/.shell/_git/git-completion.bash
-fpath=(${HOME}/.shell $fpath)
+###############
+## COMPLETIONS - added by `gitfast` plugin
+###############
+# Git completion (checkout/switch)
+# zstyle ':completion:*:*:git:*' script ${HOME}/.shell/git-completion.bash
+# fpath=(${HOME}/.shell $fpath)
 
 
 # Add no completion for terminal commands
