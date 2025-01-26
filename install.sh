@@ -14,4 +14,4 @@ chmod +x $DIR/bootstrap.sh
 less $DIR/bootstrap.sh
 
 # Finally, execute if the contents look safe
-./$DIR/install.sh
+$DIR/./bootstrap.sh
