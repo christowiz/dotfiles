@@ -1,13 +1,15 @@
 ##ALIASES
 
+# Set editor
+alias edit="code"
+alias c="edit ."
+
 #Folder aliases
 alias tmp="cd ~/tmp"
 
 #Project aliases
 alias projects="cd ~/Projects/"
-alias trampt="cd ~/Projects/Trampt/source/trampt-client-web"
 alias osxinstall="cd ~/Projects/osx-install"
-alias gettoken="sh /Volumes/Music/Trampt/scripts/get_token.sh"
 
 #Work aliases
 alias pluto="cd ~/Projects/PlutoTV/source"
@@ -19,36 +21,25 @@ alias vulcan="cd ~/Projects/PlutoTV/source/webctv-vulcan"
 #AWS aliases
 alias amp="amplify"
 
-alias bearertoken="curl -s -XGET 'https://service-bootstrap.plutopreprod.tv/v4/start?appName=comcastx1&appVersion=6.9.0-alpha-c76db74dd3&buildVersion=6.9.0-alpha-c76db74dd3&clientID=d915b260-2f8f-11ed-909b-abcbba0eec14&clientDeviceType=6&clientModelNumber=Chrome&deviceMake=comcast&deviceModel=Chrome&deviceType=comcastx1&deviceVersion=2.5' | jq -r '.sessionToken' | pbcopy"
-
-alias swf="serve -n -s build/client"
-
-alias bundle="cd ~/Projects/chrome-extensions/npm-bundlephobia/"
+alias token="curl -s -XGET 'https://boot.pluto.tv/v4/start?appName=comcastx1&appVersion=6.9.0-alpha-c76db74dd3&buildVersion=6.9.0-alpha-c76db74dd3&clientID=d915b260-2f8f-11ed-909b-abcbba0eec14&clientDeviceType=6&clientModelNumber=Chrome&deviceMake=comcast&deviceModel=Chrome&deviceType=comcastx1&deviceVersion=2.5' | jq -r '.sessionToken' | pbcopy"
+alias tokenpp="curl -s -XGET 'https://service-bootstrap.plutopreprod.tv/v4/start?appName=comcastx1&appVersion=6.9.0-alpha-c76db74dd3&buildVersion=6.9.0-alpha-c76db74dd3&clientID=d915b260-2f8f-11ed-909b-abcbba0eec14&clientDeviceType=6&clientModelNumber=Chrome&deviceMake=comcast&deviceModel=Chrome&deviceType=comcastx1&deviceVersion=2.5' | jq -r '.sessionToken' | pbcopy"
 
 #Applications
 # alias subl="/Applications/Editors/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
-alias ss="simple-server ."
 ##SourceTree alias so it can find the `node` executable
 # alias sourcetree="source ~/.zprofile && open ~/Applications/SourceTree.app"
 ##Changes app reset
-alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
+# alias changes="killall Changes ; sleep 0.5 ; rm -r ~/Library/Application\ Support/Changes ; rm ~/Library/Preferences/com.bitbq.Changes.plist ; open /Applications/Development\ Apps/Changes.app"
+##Launch Chrome
+alias chrome="~/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 ##Launch Chromium
-alias chrome="/Applications/Browsers/Chromium.app/Contents/MacOS/Chromium"
+alias chromium="~/Applications/Chromium.app/Contents/MacOS/Chromium"
+alias chromiumem="~/Applications/Chromium.app/Contents/MacOS/Chromium --enable-precise-memory-info"
 # alias chromessl="open -a /Applications/Browsers/Google\ Chrome\ SSL.app --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
-alias chromessl="/Applications/Browsers/Chromium\ SSL.app/Contents/MacOS/Chromium --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
+alias chromessl="/Applications/Chromium\ SSL.app/Contents/MacOS/Chromium --args --user-data-dir=/tmp/foo --allow-insecure-localhost"
 
 alias brave="~/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser"
-
 alias braveunsafe="~/Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser --allow-running-insecure-content"
-
-##TOMCAT SERVER
-alias tomcat="cd /usr/local/tomcat/8.5.15"
-alias tcstart="${CATALINA_HOME}/bin/catalina.sh start"
-alias tcstop="${CATALINA_HOME}/bin/catalina.sh stop"
-alias tcrestart="tcstop && echo 'Sleeping for 2 seconds' ; sleep 2 && tcstart"
-
-# Set editor
-alias edit="code"
 
 # RPi
 alias pihole="ssh pi@192.168.1.42"
@@ -69,6 +60,7 @@ alias funcs="edit ~/.shell/.functions"
 alias srcbash="source ~/.bash_profile"
 alias srczsh="source ~/.zshrc"
 alias srczp="source ~/.zprofile"
+alias srcall="srczsh && srczp"
 alias hosts="edit /etc/hosts"
 alias gitconfigg="edit ~/.gitconfig"
 alias npmconfigg="edit ~/.npmrc"
@@ -88,8 +80,6 @@ alias lsfile="ls -l | egrep -v '^d'"
 alias watchdir="watch -n 0.25 -d ls -al ."
 alias showFiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app"
 alias hideFiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app"
-# alias copy="tr -d '\n' | pbcopy"
-alias cplast="fc -ln -1 | awk '{\$1=\$1}1' | pbcopy"
 
 alias disabless="sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime 0"
 
@@ -120,21 +110,25 @@ alias gwl="git worktree list"
 alias gwp="git worktree prune"
 alias gwr="git worktree remove"
 alias gworkprune="gwp & trash"
-alias syncdevelop="git stash save -u 'temp' && git merge develop && git stash pop"
-alias synctrunk="git stash save -u 'temp' && git rebase trunk && git stash pop"
+alias syncdevelop="stashtemp && git merge develop && gpop"
+alias synctrunk="stashtemp && git rebase trunk && gpop"
 alias last="git co -"
 alias gitorphaned="LANG=en git branch --format='%(if:equals=gone)%(upstream:track,nobracket)%(then)%(refname:short)%(end)' | grep '.'"
-# alias gss="git stash && git checkout '$@' ; git stash pop"
+# alias gss="git stash && git checkout '$@' ; gpop"
 alias stash="git stash"
 alias stashs="git stash save -u"
-alias stashtemp="git stash save -u 'temp"
+alias stashstaged="git commit -m wip -n && git stash -u && git undo --soft"
+alias stashtemp="git stash save -u 'temp'"
 alias gpop="git stash pop"
-alias gcprun="git gc --prune=now"
+alias gitprune="git gc --prune=now"
 alias hash="git rev-parse HEAD"
 alias shorthash="git rev-parse --short HEAD"
 alias cpbr="git branch | grep '^\*' | cut -d' ' -f2 | pbcopy"
-alias gitconfig="code .git/config"
+alias gitconfig="edit .git/config"
 alias openpr="gh pr view --web"
+alias openjira="jira"
+alias gitroot='cd $(git root)'
+alias delbr='git sw trunk && git branch -d $(git name-rev @{-1} --name-only)'
 
 ##Start Apache server
 alias astart="sudo apachectl start"
@@ -143,7 +137,7 @@ alias astop="sudo apachectl stop"
 # alias cat="ccat --bg=dark"
 alias cat="bat"
 alias python="python3"
-
+alias bore="pkgx bore"
 ## Uncomment if using NVM
 # alias ni="n $(cat .nvmrc)"
 # alias nu="n use $(cat .nvmrc)"
@@ -151,28 +145,30 @@ alias python="python3"
 ## NPM/Yarn/PNPM
 alias lsc="list-scripts"
 alias npmig="sh ~/.shell/npm-global-install.sh"
+alias npmglobalinstall="sh ~/.shell/npm-global-install.sh"
 alias npmlist="npm list --depth=0"
 alias npmlistg="npm -g list --depth=0"
-alias npmreset="trash node_modules/ package-lock.json && npm install"
+alias npmreset="rmnodemodules package-lock.json && npm install"
+alias pnpmlistg="pnpm -g list"
+alias npmreset="rmnodemodules pnpm-lock.yaml && pnpm install"
 alias nrun="npm run"
-alias nx="pnpm nx"
+alias nx="NX_DAEMON=false pnpm nx"
 alias nxr="nx reset"
+alias nxrall="nx run-many --targets=build,lint,typecheck,test --skipNxCache"
 alias pnpmi="pnpm install"
-alias pnpx="pnpm dlx"
+alias pnpx="pnpm exec"
+alias pnpex="pnpm exec"
+alias pnpdx="pnpm dlx"
 alias upgradepnpm="curl -fsSL https://get.pnpm.io/install.sh | sh -"
-alias use="fnm use"
-alias yarnglobal="cd ~/.config/yarn/global/"
-alias yarnreset="trash node_modules/ yarn.lock && yarn"
 
 ##########
 # NODE
 ##########
 alias nodei="node --inspect"
 alias nodeibr="node --debug-brk --inspect"
-# alias chnode="pnpm env use --global"
-
+alias countnode="ps | grep -v 'grep' | grep -c node"
 # Recursively remove all `node_modules` directories
-alias rmnodemodules="find . -type d -name 'node_modules' -exec rm -rf '{}' +"
+alias rmnodemodules="find . -name 'node_modules' -type d -prune -print -exec trash '{}' +"
 
 alias brewup="brew update ;\
             brew upgrade ;\
@@ -180,7 +176,9 @@ alias brewup="brew update ;\
             brew doctor ;\
             brew outdated"
 
-alias shell="echo ${SHELL}"
+alias shell="echo \${SHELL}"
+
+# alias docker="podman"
 # alias rm="trash"
 
 ## JAVA

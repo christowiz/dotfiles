@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Many of these utilities have been collected from various sources
+# https://github.com/mathiasbynens/dotfiles
+
 # launch tivo with debugging port
 # function tivo() {
 # 	launch goto web:"$1?tivo_browser_args=--remote-debugging-port=9222"
@@ -6,22 +11,22 @@
 # show dependency graph
 function deptree() {
 	local src=""
-	echo $1
+	echo "$1"
 	if [ -z "$1" ]; then
 		src="src"
 	else
 		src=$1
 	fi
 	# echo $src
-	pnpm dlx depcruise --include-only "^${src}" --ts-config ./tsconfig.json --webpack-config ./webpack.config.js --output-type dot $src | pnpm dlx dot -T svg >dependencygraph.svg
+	pnpm dlx depcruise --include-only "^${src}" --ts-config ./tsconfig.json --webpack-config ./webpack.config.js --output-type dot "$src" | pnpm dlx dot -T svg >dependencygraph.svg
 }
 
 function copy() {
-	$($1 | tr -d '\n' | pbcopy)
+	eval "$1" | tr -d '\n' | pbcopy
 }
 
 function chshell() {
-	chsh -s $(which $1)
+	chsh -s "$(which "$1")"
 }
 
 function gitsyncbr() {
@@ -37,19 +42,19 @@ function gitsyncbr() {
 	echo "---> git co -"
 	git co -
 	echo "---> git rebase $branch"
-	git rebase $branch
+	git rebase "$branch"
 	echo "---> git stash pop"
 	git stash pop
 }
 
 function gitswbr() {
 	git stash save -u 'temp'
-	git sw $1
+	git sw "$1"
 	git stash pop
 }
 
 function gitrmdir() {
-	git filter-repo --invert-paths --path $1
+	git filter-repo --invert-paths --path "$1"
 	git reflog expire --expire=now --all && git gc --prune=now --aggressive
 	echo "'git-filter-repo' clears the remote information.  Reset origin and branch upstream using the following commands:"
 	echo "git remote add origin {URL_PATH}"
@@ -57,7 +62,7 @@ function gitrmdir() {
 }
 
 function gcot() {
-	git co -t origin/$1
+	git co -t "origin/$1"
 }
 
 function git_branch_name() {
@@ -65,11 +70,11 @@ function git_branch_name() {
 }
 
 function gitbrename() {
-	git branch -m $(git_branch_name) $1
+	git branch -m "$(git_branch_name)" "$1"
 }
 
 function cpbr() {
-	$(git_branch_name) | pbcopy
+	git_branch_name | pbcopy
 }
 
 #Colorized man pages
@@ -86,46 +91,42 @@ function man() {
 }
 
 function headless() {
-	: ${1?"ERROR: URL argument missing"}
-	echo 'Headless browser for' $1 'running at http://localhost:9222'
-	canary --headless --remote-debugging-port=9222 $1
+	: "${1?"ERROR: URL argument missing"}"
+	echo "Headless browser for $1 running at http://localhost:9222"
+	canary --headless --remote-debugging-port=9222 "$1"
 }
 
 # Simple calculator
 function calc() {
 	local result=""
-	result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
+	result="$(printf 'scale=10;%s\n' "$*" | bc --mathlib | tr -d '\\\n')"
 	#                       └─ default (when `--mathlib` is used) is 20
 	#
 	if [[ "$result" == *.* ]]; then
 		# improve the output for decimal numbers
-		printf "$result" |
-			sed -e 's/^\./0./' $( # add "0" for cases like ".5"` \
-				-e 's/^-\./-0./'
-			) \
-				-e 's/0*$//;s/\.$//' # add "0" for cases like "-.5"`\
+		printf "%s" "$result" |
+			sed -e 's/^\./0./' -e 's/^-\./-0./' -e 's/0*$//;s/\.$//' # add "0" for cases like "-.5"`
 		# remove trailing zeros
 	else
-		printf "$result"
+		printf '%s' "$result"
 	fi
-	printf "\n"
 }
 
 # Create a new directory and enter it
 function mkcd() {
-	mkdir -p "$@" && cd "$@"
+	mkdir -p "$@" && cd "$@" || return
 }
 
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`
-	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" || exit
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
-	local tmpFile="${@%/}.tar"
+	local tmpFile="${*%/}.tar"
 	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
-
+	local tmpFile="${*%/}.tar"
 	size=$(
 		stat -f"%z" "${tmpFile}" 2>/dev/null # OS X `stat`
 		stat -c"%s" "${tmpFile}" 2>/dev/null # GNU `stat`
@@ -156,17 +157,18 @@ function fs() {
 	else
 		local arg=-sh
 	fi
-	if [[ -n "$@" ]]; then
-		du $arg -- "$@"
+	if [[ -n "$1" ]]; then
+		for item in "$@"; do
+			du $arg -- "$item"
+		done
 	else
-		du $arg .[^.]* *
+		du $arg .[^.]* ./*
 	fi
 }
 
 ## Git
-# Use Git’s colored diff when available
-hash git &>/dev/null
-if [ $? -eq 0 ]; then
+# Use Git's colored diff when available
+if hash git &>/dev/null; then
 	function diff() {
 		git diff --no-index --color-words "$@"
 	}
@@ -174,7 +176,8 @@ fi
 
 # Create a data URL from a file
 function dataurl() {
-	local mimeType=$(file -b --mime-type "$1")
+	local mimeType
+	mimeType=$(file -b --mime-type "$1")
 	if [[ $mimeType == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8"
 	fi
@@ -186,7 +189,7 @@ function server() {
 	local port="${1:-8000}"
 	sleep 1 && open "http://localhost:${port}/" &
 	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-	# And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+	# And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
 	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
@@ -194,16 +197,18 @@ function server() {
 # (Requires PHP 5.4.0+.)
 function phpserver() {
 	local port="${1:-4000}"
-	local ip=$(ipconfig getifaddr en1)
-	sleep 1 && open "http://${ip}:${port}/" &
+	local ip
+	ip=$(ipconfig getifaddr en1)
 	php -S "${ip}:${port}"
 }
 
 # Compare original and gzipped file size
 function gz() {
-	local origsize=$(wc -c <"$1")
-	local gzipsize=$(gzip -c "$1" | wc -c)
-	local ratio=$(echo "$gzipsize * 100/ $origsize" | bc -l)
+	local gzipsize
+	local origsize
+	local ratio
+	gzipsize=$(gzip -c "$1" | wc -c)
+	ratio=$(echo "$gzipsize * 100/ $origsize" | bc -l)
 	printf "orig: %d bytes\n" "$origsize"
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
@@ -221,7 +226,7 @@ function json() {
 # Escape UTF-8 characters into their 3-byte format
 function escape() {
 	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
-	# print a newline unless we’re piping the output to another program
+	# print a newline unless we're piping the output to another program
 	if [ -t 1 ]; then
 		echo # newline
 	fi
@@ -230,16 +235,16 @@ function escape() {
 # Decode \x{ABCD}-style Unicode escape sequences
 function unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
-	# print a newline unless we’re piping the output to another program
+	# print a newline unless we're piping the output to another program
 	if [ -t 1 ]; then
 		echo # newline
 	fi
 }
 
-# Get a character’s Unicode code point
+# Get a character's Unicode code point
 function codepoint() {
 	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
-	# print a newline unless we’re piping the output to another program
+	# print a newline unless we're piping the output to another program
 	if [ -t 1 ]; then
 		echo # newline
 	fi
@@ -255,21 +260,21 @@ function getcertnames() {
 
 	local domain="${1}"
 	echo "Testing ${domain}…"
-	echo # newline
+	echo "" # newline
 
-	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" |
-		openssl s_client -connect "${domain}:443" 2>&1)
+	local tmp
+	tmp=$(echo -e "GET / HTTP/1.0\nEOT" |
+		openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1)
 
 	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
-		local certText=$(echo "${tmp}" |
-			openssl x509 -text -certopt "no_header, no_serial, no_version, \
-			no_signame, no_validity, no_issuer, no_pubkey, no_sigdump, no_aux")
+		local certText
+		certText=$(echo "${tmp}" | openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, no_serial, no_sigdump no_signame, no_validity, no_version")
 		echo "Common Name:"
-		echo # newline
-		echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//"
-		echo # newline
+		echo "" # newline
+		echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//" | sed -e "s/\/emailAddress=.*//"
+		echo "" # newline
 		echo "Subject Alternative Name(s):"
-		echo # newline
+		echo "" # newline
 		echo "${certText}" | grep -A 1 "Subject Alternative Name:" |
 			sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2
 		return 0
@@ -323,12 +328,12 @@ EOF
 # Manually remove a downloaded app or file from the quarantine
 function unquarantine() {
 	for attribute in com.apple.metadata:kMDItemDownloadedDate com.apple.metadata:kMDItemWhereFroms com.apple.quarantine; do
-		xattr -r -d "$attribute" "$@"
+		xattr -d "$attribute" "$1"
 	done
 }
 
 function awsmfa() {
-	CMD=$(aws sts get-session-token --serial-number arn:aws:iam::157385605725:mfa/chris.gwizdala --token-code $1)
+	CMD=$(aws sts get-session-token --serial-number arn:aws:iam::157385605725:mfa/chris.gwizdala --token-code "$1")
 	echo "$CMD"
 }
 
@@ -347,58 +352,227 @@ function run() {
 		command npm "$@"
 	else
 		echo "pnpm"
-		command pnpm "$@"
+		lsof -i tcp:"$1"
 	fi
 }
 
 function port() {
-	lsof -i tcp:$1
+	lsof -i tcp:"$1"
 }
 
 function chnode() {
-	help="Usage: chnode [version] [-r]\n
-  To list all locally installed versions of Node.js use no arguments\n
-  Example: chnode\n
+	local default_node_version
+	local global_node_version
+	local local_node_version
 
-  To install a specific version of Node.js use the version number as the first argument\n
-  Example: chnode 14.17.0\n
+	default_node_version=$(pnpm config get use-node-version)
 
-  To see all versions of Node.js available to install use the "-r" flag\n
-  Example: chnode -r\n"
+	# get version of Node.js (without the 'v` prefix') set
+	# in the package.json engines.node field
+	# see https://pnpm.io/npmrc#node-version
+	local_node_version=$(pnpm config get node-version)
 
+	# Save current global version of Node.js
+	global_node_version=$(node --version | sed 's/^v//')
+
+	function showHelp() {
+		echo "
+  Usage: chnode [version | -h | --help | -r | use]
+
+  Options:
+    version       Install a specific version of Node.js (e.g., 14.17.0)
+    -h, --help    Show this help message
+    -r            List remote versions of Node.js available for installation
+    use           Use the version of Node.js specified in the .nvmrc file
+
+  If no arguments are provided, list all locally installed versions of Node.js.
+
+  Examples:
+    chnode 14.17.0       # Install and use Node.js version 14.17.0
+    chnode -h            # Show help message
+    chnode --help        # Show help message
+    chnode -r            # List remote versions of Node.js available for installation
+    chnode use           # Use the version of Node.js specified in the .nvmrc file
+  "
+	}
+
+	function compareNodeVersions() {
+		[[ $1 == "$global_node_version" ]] && return 0 || return 1
+	}
+
+	function installNode() {
+		# if version selected is the same as the current version of Node.js
+		if compareNodeVersions "$1"; then
+			echo "Node.js version $1 is already in use"
+			return
+		fi
+		pnpm env use --global "$1" >/dev/null
+		echo
+		echo "---> Installing Node.js version $1"
+		echo
+		export COREPACK_ENABLE_STRICT=0
+		pnpm env use --global "$1" >/dev/null
+		unset COREPACK_ENABLE_STRICT
+		return
+	}
+
+	function nodeUse() {
+		# local npmrc_file=".npmrc"
+
+		# if [[ -z "$local_node_version" && -f "$nvmrc_file" && -r "$nvmrc_file" ]]; then
+		#   local_node_version=$(cat "$nvmrc_file")
+		# fi
+
+		if [[ -n "$local_node_version" ]]; then
+			installNode "$local_node_version"
+		fi
+
+		if [[ -n "$default_node_version" ]]; then
+			installNode "$default_node_version"
+		fi
+	}
+
+	function listNodeVersions() {
+		local flag=$1
+		echo "flag: $flag"
+
+		arr=()
+		while IFS= read -r line; do
+			arr+=("$line")
+		done < <(pnpm env list "$flag")
+		PS3="Select version of Node.js: "
+
+		# Display a list of all locally installed versions of Node.js
+		select opt in "${arr[@]}"; do
+			# If the user selects a valid option, install that version of Node.js
+			if [[ -n ${arr[$((REPLY - 1))]} ]]; then
+				installNode "$(echo "$opt" | xargs)"
+				break
+			else
+				echo "invalid option $REPLY"
+			fi
+		done
+	}
+
+	# install a specific version of Node.js.
 	if [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-		echo "Installing Node.js version $1"
-		return
+		installNode "$1"
+	# Show help message
 	elif [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-		echo $help
-		return
+		showHelp
+	# Show remote versions of Node.js available for installation
 	elif [ "$1" = "-r" ]; then
 		echo 'Remote versions of Node.js available: '
 		flag="--remote"
+		listNodeVersions "--remote"
+	# Use the version of Node.js specified in the .nvmrc file
+	elif [ "$1" = "use" ]; then
+		nodeUse
+	# List all locally installed versions of Node.js
 	elif [ -z "$1" ]; then
 		echo 'Locally installed versions of Node.js available: '
-		flag=""
+		echo
+		listNodeVersions
 	else
-		echo "\nUnknown argument \"$1\"\n"
+		printf "\nUnknown argument \"%s\"\n" "$1"
 		showHelp
-
-		return
 	fi
+}
 
-	IFS=$'\n' arr=($(pnpm env list $flag))
-	PS3="Select version of Node.js: "
-
-	select opt in "${arr[@]}"; do
-		if [[ -v arr[$REPLY] ]]; then
-			echo "Switching to Node.js version $opt"
-			pnpm env use --global $opt
-			break
-		else
-			echo "invalid option $REPLY"
-		fi
-	done
+function chpnpm() {
+	corepack prepare pnpm@"$1" --activate
 }
 
 function rmrecursive() {
-	find . -name '$1' -exec rm -rf '{}' +
+	find . -name "$1" -exec rm -rf '{}' +
+}
+
+function gitchcase() {
+	git mv "$1" "$1"-tmp
+	git mv "$1"-tmp "$2"
+}
+
+# Copy the current branch name to the clipboard
+function jira() {
+	local ticket
+	ticket=$(git rev-parse --abbrev-ref HEAD | grep -oE '([A-Z]{2,}-[0-9]+)')
+	if [ -z "$ticket" ]; then
+		echo "No Jira ticket found in the branch name"
+	else
+		open "https://paramount.atlassian.net//browse/$ticket"
+	fi
+}
+
+# Copy the Jira ticket to the clipboard
+function cpjira() {
+	local ticket
+	ticket=$(git rev-parse --abbrev-ref HEAD | grep -oE '([A-Z]{2,}-[0-9]+)')
+	if [ -z "$ticket" ]; then
+		echo "No Jira ticket found in the branch name"
+	else
+		echo "$ticket" | pbcopy
+	fi
+}
+
+# Copy the last command to the clipboard
+function cplast() {
+	fc -ln -1 | awk '{$1=$1}1' | pbcopy
+}
+
+function killnode() {
+	sudo pkill -f node
+	pgrep -u "$UID" node | sudo xargs kill -9
+}
+
+function cdsymlink() {
+	local target
+	target=$(readlink "$1")
+	if [ -z "$target" ]; then
+		echo "Not a symlink"
+	else
+		cd -- "$(dirname -- "$(readlink -- "$1")")" || exit
+	fi
+}
+
+function servessl() {
+	# Default values
+	local ROOT="."
+	local CERT="$HOME/.ssl/cert.pem"
+	local KEY="$HOME/.ssl/key.pem"
+	local PORT=3000
+	local ADDITIONAL_ARGS=()
+
+	# Check if first argument is a path and not a flag
+	if [ -n "$1" ] && [[ ! "$1" == -* ]]; then
+		ROOT="$1"
+		shift
+	fi
+
+	# Process arguments
+	while [[ $# -gt 0 ]]; do
+		case $1 in
+		-p | --port)
+			PORT="$2"
+			shift 2
+			;;
+		--ssl-cert)
+			CERT="$2"
+			shift 2
+			;;
+		--ssl-key)
+			KEY="$2"
+			shift 2
+			;;
+		*)
+			# Collect any additional arguments to pass to serve
+			ADDITIONAL_ARGS+=("$1")
+			shift
+			;;
+		esac
+	done
+
+	echo "Starting server on port ${PORT}..."
+
+	# Pass all collected arguments to serve
+	pnpm dlx serve "$ROOT" -p "$PORT" --ssl-cert "$CERT" --ssl-key "$KEY" "${ADDITIONAL_ARGS[@]}"
 }

@@ -1,9 +1,7 @@
-# Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/profile.pre.bash"
 [ -f /etc/profile ] && . /etc/profile
-[ -f $HOME/.shell/.aliases ] && . $HOME/.shell/.aliases
-[ -f $HOME/.shell/.functions ] && . $HOME/.shell/.functions
-[ -f ${HOME}/.iterm2/.iterm2_shell_integration.zsh ] && . ${HOME}/.iterm2/.iterm2_shell_integration.zsh && cd - && cd -
+[ -f "$HOME"/.shell/.aliases ] && . "$HOME"/.shell/.aliases
+[ -f "$HOME"/.shell/.functions ] && . "$HOME"/.shell/.functions
+[ -f "${HOME}"/.iterm2/.iterm2_shell_integration.zsh ] && . "${HOME}"/.iterm2/.iterm2_shell_integration.zsh && cd - && cd - || exit
 
 #terminal colors
 export CLICOLOR=1
@@ -12,36 +10,14 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 ## PATH EXPORTS
 PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/local/sbin:$PATH"
 
-##Yarn exports
-[ -f $HOME/.yarn ] && PATH="$HOME/.yarn/bin:$PATH"
-
-#NPM global packages
-PATH="$NPM_PACKAGES/bin:$PATH"
-
-# Ruby path
-PATH="/usr/local/opt/ruby/bin:$PATH"
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -rrubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
-
-# Deno path
-[ -f $HOME/.deno ] && PATH="$HOME/.deno/bin:$PATH"
-
-# Rust path
-[ -f $HOME/.cargo ] && PATH="$HOME/.cargo/bin:$PATH"
-
 export PATH
 
 # we can inherit from /etc/manpath via the `manpath`command
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-export MANPATH="/usr/local/share/man:$(manpath)"
+MANPATH="/usr/local/share/man:$(manpath)"
+export MANPATH
 
 export EDITOR='code -w'
-
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-## Tomcat
-export CATALINA_HOME="/usr/local/tomcat/8.5.15"
 
 # Specify your defaults in this environment variable
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
@@ -49,17 +25,9 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
 export NODE_OPTIONS=--max_old_space_size=4096
 
 # Private keys/tokens
-if [ -r ~/.not-public ]; then
-  source ~/.not-public
+if [ -r "$HOME"/.not-public ]; then
+  source "$HOME"/.not-public
 fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# init rust env
-source "$HOME/.rover/env"
-. "$HOME/.cargo/env"
 
 ###-begin-npm-completion-###
 #
@@ -121,6 +89,3 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
-
-# Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/profile.post.bash"
