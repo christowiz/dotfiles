@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DIR="/tmp/dotfiles"
 
@@ -15,3 +15,7 @@ less $DIR/bootstrap.sh
 
 # Finally, execute if the contents look safe
 $DIR/./bootstrap.sh
+
+rm -rf $DIR
+
+unset DIR

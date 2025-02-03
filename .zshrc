@@ -1,10 +1,15 @@
-export TERM="xterm-256color"
+# add conditional to load ~/.not-public if it exists
+[ -f "$HOME"/.not-public ] && . "$HOME"/.not-public
 
-fpath=(/usr/local/share/zsh/site-functions $fpath)
+[ -f "$HOME"/.shell/.aliases ] && . "$HOME"/.shell/.aliases
+[ -f "$HOME"/.shell/.functions ] && . "$HOME"/.shell/.functions
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export DEFAULT_USER="$(whoami)"
+
+for file in ~/.shell/.aliases ~/.shell/.functions; do
+  [ -f "$file" ] && source "$file"
+done
 
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
   source $(brew --prefix)/etc/brew-wrap
@@ -16,8 +21,6 @@ fi
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -79,19 +82,22 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  autojump
+  # autojump
   # copyfile
   # extract
+  fast-syntax-highlighting
   # git
   gitfast
   # git-extras
-  # git-prompt
+  git-prompt
   # jsontools
   # jump
+  # macos
   # npm
   # nx-completion
   # vscode
-  zsh-autosuggestions
+  # zsh-autocomplete
+  # zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
@@ -169,7 +175,7 @@ if [ -f ~/.zsh_nocorrect ]; then
 fi
 
 # Homebrew
-BREW_PREFIX=$(brew --prefix)
+# export BREW_PREFIX=$(brew --prefix)
 # https://github.com/marlonrichert/zsh-autocomplete
 # source $BREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # source $BREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -178,19 +184,8 @@ autoload -Uz compinit
 # thefuck
 eval $(thefuck --alias)
 
-# PATH
-
-# If you come from bash you might have to change your $PATH.
-PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/local/sbin:$PATH"
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-export PATH
+# added for npm-completion https://github.com/Jephuff/npm-bash-completion
+PATH_TO_NPM_COMPLETION="/Users/gwizdalC0502/Library/pnpm/global/5/.pnpm/npm-completion@2.0.6/node_modules/npm-completion"
+source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
 eval "$(mcfly init zsh)"
